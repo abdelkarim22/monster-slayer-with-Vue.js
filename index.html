@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monster Slayer</title>
+    <script src="https://npmcdn.com/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app" v-on:onload="init">
+    <section class="row">
+        <div class="small-6 columns">
+            <h1 class="text-center">YOU</h1>
+            <div class="healthbar">
+                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" :style="styleAfterDamageForP">
+                <p>{{pTotalPoints}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="small-6 columns">
+            <h1 class="text-center">MONSTER</h1>
+            <div class="healthbar">
+                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" :style="styleAfterDamageForM">
+                    <p>{{mTotalPoints}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="row controls" v-show="!isShown">
+        <div class="small-12 columns">
+            <button id="start-game" @click="start" >START NEW GAME</button>
+        </div>
+    </section>
+    <section class="row controls" v-show="isShown">
+        <div class="small-12 columns">
+            <button id="attack" @click="attack">ATTACK</button>
+            <button id="special-attack"@click="specialAttack">SPECIAL ATTACK</button>
+            <button id="heal" @click="heal">HEAL</button>
+            <button id="give-up" @click="giveUp">GIVE UP</button>
+        </div>
+    </section>
+    <section class="row log" v-show="isShown">
+        <div class="small-12 columns">
+          <ul class="ul">
+
+             <!--.slice().reverse() diziyi ters şekilde ekrana bastırmak için-->
+             <template class="li" v-for="value in logList.slice().reverse()">
+                 <div v-for="(v, k, i) in value">
+                     <li v-if="k == 'mHit'" class="monster-turn">
+                             <p>Monster hits player for {{ v }}</p>
+                     </li>
+
+                     <li v-else-if="k == 'pHeal'" class="player-turn">
+                         <p>Player heals himself for {{ v }}</p>
+                     </li>
+
+                     <li v-else-if="k == 'pHit'" class="player-turn">
+                         <p>Player hits monster for {{ v }}</p>
+                     </li>
+                 </div>
+             </template>
+
+         </ul>
+        </div>
+    </section>
+</div>
+<script src="gameScript.js" charset="utf-8"></script>
+
+</body>
+</html>
